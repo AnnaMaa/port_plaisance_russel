@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <title>Documentation API – Port de Plaisance Russell</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root { --bg:#0b1220; --card:#121a2b; --muted:#95a2b3; --accent:#7bdfff; --text:#e6eefb; --ok:#3ddc97; --warn:#ffb703; --err:#ff5a5a; }
+    *{box-sizing:border-box} body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#0b1220,#0b1220 60%,#0e1627);color:var(--text)}
+    .container{max-width:1100px;margin:0 auto;padding:32px}
+    .hero{display:flex;flex-wrap:wrap;gap:24px;align-items:center;margin-bottom:24px}
+    .hero h1{margin:0;font-size:32px}
+    .badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#16233d;color:var(--accent);border:1px solid #1e2c48;font-size:12px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;margin:24px 0}
+    .card{background:var(--card);border:1px solid #1d2a45;border-radius:16px;padding:18px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+    h2{font-size:22px;margin:8px 0 12px}
+    h3{font-size:16px;margin:12px 0 8px;color:#cfe3ff}
+    code,kbd{background:#0e182a;border:1px solid #213152;border-radius:8px;padding:2px 6px;font-family:ui-monospace,Menlo,Consolas,monospace}
+    pre{background:#0e182a;border:1px solid #213152;border-radius:12px;padding:14px;overflow:auto}
+    a{color:var(--accent);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .toc a{display:block;color:#cfe3ff;padding:6px 0}
+    .pill{display:inline-block;border:1px solid #27406b;background:#0f1c31;padding:2px 8px;border-radius:999px;font-size:12px;margin-right:6px}
+    .method{font-weight:700}
+    .GET{color:var(--ok)} .POST{color:#7bdfff} .PUT{color:#f0db4f} .PATCH{color:#d4a5ff} .DELETE{color:var(--err)}
+    .footer{margin-top:36px;color:var(--muted);font-size:13px}
+    .kbd{background:#101a2b;border:1px solid #273a60;border-radius:6px;padding:2px 6px}
+    .table{width:100%;border-collapse:collapse}
+    .table th,.table td{border-bottom:1px solid #213152;padding:10px;text-align:left}
+    .chip{display:inline-flex;align-items:center;gap:6px;background:#0f1d33;border:1px solid #213152;border-radius:999px;padding:4px 10px;font-size:12px}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="hero">
+      <div>
+        <span class="badge">Port de Plaisance Russell • API v1</span>
+        <h1>Documentation de l’API</h1>
+        <p class="muted">Base URL locale : <code>http://localhost:3000/api</code> • Auth : <span class="chip">Bearer JWT</span></p>
+        <p class="muted">Cette API gère les <strong>catways</strong>, les <strong>réservations</strong> et les <strong>utilisateurs</strong> (capitainerie).</p>
+        <p><a href="/docs/README-API.md">Voir la version Markdown</a></p>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card toc">
+        <h2>Sommaire</h2>
+        <a href="#auth">1. Authentification</a>
+        <a href="#users">2. Utilisateurs</a>
+        <a href="#catways">3. Catways</a>
+        <a href="#reservations">4. Réservations</a>
+        <a href="#examples">5. Exemples (curl)</a>
+        <a href="#errors">6. Codes d’erreur</a>
+      </div>
+
+      <div class="card">
+        <h2>Infos rapides</h2>
+        <p><span class="pill">JSON only</span> <span class="pill">Helmet + CORS</span> <span class="pill">RESTful</span></p>
+        <h3>En-tête requis (routes protégées)</h3>
+        <pre><code>Authorization: Bearer &lt;token&gt;</code></pre>
+        <h3>Login</h3>
+        <pre><code>POST /auth/login
+{ "email": "admin@test.com", "password": "secret123" }</code></pre>
+      </div>
+    </div>
+
+    <div id="auth" class="card">
+      <h2>1. Authentification</h2>
+      <p><span class="method POST">POST</span> <span class="POST">/auth/login</span> → Obtenir un token</p>
+      <pre><code>Request
+Content-Type: application/json
+
+{ "email": "admin@test.com", "password": "secret123" }
+
+Response 200
+{ "message": "ok", "token": "eyJhbGciOi..." }</code></pre>
+
+      <p><span class="method POST">POST</span> <span class="POST">/auth/logout</span> → Déconnexion</p>
+      <pre><code>Response 200
+{ "message": "logged out" }</code></pre>
+    </div>
+
+    <div id="users" class="card">
+      <h2>2. Utilisateurs (protégé)</h2>
+      <table class="table">
+        <tr><th>Endpoint</th><th>Description</th></tr>
+        <tr><td><span class="POST">POST</span> /users</td><td>Créer un utilisateur</td></tr>
+        <tr><td><span class="GET">GET</span> /users/:id</td><td>Détail</td></tr>
+        <tr><td><span class="PUT">PUT</span> /users/:id</td><td>Remplacement complet</td></tr>
+        <tr><td><span class="DELETE">DELETE</span> /users/:id</td><td>Supprimer</td></tr>
+      </table>
+    </div>
+
+    <div id="catways" class="card">
+      <h2>3. Catways (protégé)</h2>
+      <table class="table">
+        <tr><th>Méthode</th><th>Route</th><th>Note</th></tr>
+        <tr><td class="GET">GET</td><td>/catways</td><td>Liste</td></tr>
+        <tr><td class="GET">GET</td><td>/catways/:id</td><td>Détail</td></tr>
+        <tr><td class="POST">POST</td><td>/catways</td><td>Créer</td></tr>
+        <tr><td class="PUT">PUT</td><td>/catways/:id</td><td>Remplace l’objet</td></tr>
+        <tr><td class="PATCH">PATCH</td><td>/catways/:id</td><td>Mise à jour partielle</td></tr>
+        <tr><td class="DELETE">DELETE</td><td>/catways/:id</td><td>Supprimer</td></tr>
+      </table>
+      <h3>Schéma</h3>
+      <pre><code>{
+  "_id": "ObjectId",
+  "catwayNumber": 1,
+  "type": "long | short",
+  "catwayState": "string",
+  "createdAt": "ISODate",
+  "updatedAt": "ISODate"
+}</code></pre>
+    </div>
+
+    <div id="reservations" class="card">
+      <h2>4. Réservations (protégé)</h2>
+      <table class="table">
+        <tr><th>Méthode</th><th>Route</th><th>Note</th></tr>
+        <tr><td class="GET">GET</td><td>/catways/:id/reservations</td><td>Liste pour un catway</td></tr>
+        <tr><td class="GET">GET</td><td>/catways/:id/reservations/:idReservation</td><td>Détail</td></tr>
+        <tr><td class="POST">POST</td><td>/catways/:id/reservations</td><td>Créer</td></tr>
+        <tr><td class="DELETE">DELETE</td><td>/catways/:id/reservations/:idReservation</td><td>Supprimer</td></tr>
+        <tr><td class="GET">GET</td><td>/reservations</td><td>Liste globale</td></tr>
+      </table>
+      <h3>Schéma</h3>
+      <pre><code>{
+  "_id": "ObjectId",
+  "catwayId": "ObjectId",
+  "catwayNumber": 1,
+  "clientName": "string",
+  "boatName": "string",
+  "checkIn": "ISODate",
+  "checkOut": "ISODate"
+}</code></pre>
+    </div>
+
+    <div id="examples" class="card">
+      <h2>5. Exemples (curl)</h2>
+      <h3>Login</h3>
+      <pre><code>curl -X POST http://localhost:3000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email":"admin@test.com","password":"secret123"}'</code></pre>
+
+      <h3>Créer un catway</h3>
+      <pre><code>curl -X POST http://localhost:3000/api/catways \
+  -H "Authorization: Bearer &lt;TOKEN&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{"catwayNumber":36,"type":"long","catwayState":"ok"}'</code></pre>
+
+      <h3>Créer une réservation</h3>
+      <pre><code>curl -X POST http://localhost:3000/api/catways/&lt;CATWAY_ID&gt;/reservations \
+  -H "Authorization: Bearer &lt;TOKEN&gt;" \
+  -H "Content-Type: application/json" \
+  -d '{"clientName":"Jean Dupont","boatName":"Sea Breeze","checkIn":"2025-09-20","checkOut":"2025-09-23"}'</code></pre>
+    </div>
+
+    <div id="errors" class="card">
+      <h2>6. Codes d’erreur</h2>
+      <ul>
+        <li><span class="chip">400</span> Données invalides</li>
+        <li><span class="chip">401</span> Token manquant/invalide</li>
+        <li><span class="chip">404</span> Ressource introuvable</li>
+        <li><span class="chip">409</span> Conflit (ex. catwayNumber déjà pris)</li>
+        <li><span class="chip">500</span> Erreur serveur</li>
+      </ul>
+    </div>
+
+    <p class="footer">Astuce : pour tester rapidement sous PowerShell : <span class="kbd">$res = Invoke-RestMethod ...</span></p>
+  </div>
+</body>
+</html>

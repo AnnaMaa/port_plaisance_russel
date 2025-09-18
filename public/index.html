@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Connexion – Port de plaisance Russell</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- CSS externe -->
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+  <main class="login-container">
+    <div class="login-card">
+      <h1>⚓ Port de plaisance Russell</h1>
+      <p class="subtitle">Connectez-vous à l’espace capitainerie</p>
+
+      <form id="login" class="form-grid">
+        <label>
+          Email
+          <input type="email" name="email" placeholder="admin@test.com" required>
+        </label>
+        <label>
+          Mot de passe
+          <input type="password" name="password" placeholder="••••••••" required>
+        </label>
+        <button type="submit" class="btn primary">Se connecter</button>
+      </form>
+
+      <p id="loginInfo" class="msg"></p>
+
+      <footer class="footer">
+        <a href="/docs/index.html">📘 Documentation API</a>
+      </footer>
+    </div>
+  </main>
+
+  <!-- JS externe -->
+  <script src="/js/login.js" defer></script>
+</body>
+</html>
+

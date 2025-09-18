@@ -1,0 +1,16 @@
+import { Router } from 'express';
+import { requireAuth } from '../middlewares/auth.js';
+import { getCatways, getCatwayById, postCatway, putCatway, patchCatwayCtrl, deleteCatway } from '../controllers/catwayController.js';
+import { getReservationsForCatway, getReservationDetail, postReservation, deleteReservationCtrl } from '../controllers/reservationController.js';
+const r = Router();
+r.get('/', requireAuth, getCatways);
+r.get('/:id', requireAuth, getCatwayById);
+r.post('/', requireAuth, postCatway);
+r.put('/:id', requireAuth, putCatway);
+r.patch('/:id', requireAuth, patchCatwayCtrl);
+r.delete('/:id', requireAuth, deleteCatway);
+r.get('/:id/reservations', requireAuth, getReservationsForCatway);
+r.get('/:id/reservations/:idReservation', requireAuth, getReservationDetail);
+r.post('/:id/reservations', requireAuth, postReservation);
+r.delete('/:id/reservations/:idReservation', requireAuth, deleteReservationCtrl);
+export default r;

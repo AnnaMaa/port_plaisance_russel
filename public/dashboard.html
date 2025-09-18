@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard - Port de plaisance Russell</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- ✅ CSS externe (compatible CSP) -->
+  <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">⚓</span>
+      <span class="title">Port de plaisance — Dashboard</span>
+    </div>
+    <div class="actions">
+      <span id="status">Connecté ✅</span>
+      <button id="logout" class="btn danger outline">Se déconnecter</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2>Catways</h2>
+      <form id="createCatway" class="form-grid">
+        <label>
+          Numéro
+          <input name="catwayNumber" type="number" placeholder="Ex. 36" required />
+        </label>
+        <label>
+          Type
+          <select name="type" required>
+            <option value="long">long</option>
+            <option value="short">short</option>
+          </select>
+        </label>
+        <label class="full">
+          État
+          <input name="catwayState" placeholder="ok, réparations…" value="ok" />
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Créer un catway</button>
+          <button id="btnListCatways" type="button" class="btn">Lister les catways</button>
+        </div>
+      </form>
+
+      <div id="catwaysList" class="list-panel"></div>
+    </section>
+
+    <section class="card">
+      <h2>Réservations</h2>
+      <form id="createReservation" class="form-grid">
+        <label class="full">
+          ID du catway
+          <input name="catwayId" id="catwayIdInput" placeholder="Cliquer un ID dans le tableau ci-dessous" required />
+        </label>
+        <label>
+          Client
+          <input name="clientName" placeholder="Nom du client" required />
+        </label>
+        <label>
+          Bateau
+          <input name="boatName" placeholder="Nom du bateau" required />
+        </label>
+        <label>
+          Arrivée
+          <input name="checkIn" type="date" required />
+        </label>
+        <label>
+          Départ
+          <input name="checkOut" type="date" required />
+        </label>
+        <div class="form-actions">
+          <button type="submit" class="btn primary">Créer une réservation</button>
+          <button id="btnListReservations" type="button" class="btn">Lister les réservations</button>
+        </div>
+      </form>
+
+      <div id="reservationsList" class="list-panel"></div>
+    </section>
+    <section class="card">
+  <h2>Utilisateurs</h2>
+  <form id="createUser" class="form-grid">
+    <label>Nom <input name="name" required></label>
+    <label>Email <input name="email" type="email" required></label>
+    <label>Mot de passe <input name="password" type="password" required></label>
+    <div class="form-actions">
+      <button type="submit" class="btn primary">Créer</button>
+      <input name="userId" id="userIdInput" placeholder="ID utilisateur pour modifier/supprimer">
+      <button id="btnUpdateUser" type="button" class="btn">Mettre à jour (PUT)</button>
+      <button id="btnDeleteUser" type="button" class="btn danger">Supprimer</button>
+    </div>
+  </form>
+  <div id="usersMsg" class="list-panel"></div>
+</section>
+
+  </main>
+
+  <footer class="footer">
+    <a href="/">← Retour accueil</a> ·
+    <a href="/docs/index.html">Documentation API</a>
+  </footer>
+
+  <!-- ✅ JS externe (compatible CSP) -->
+  <script src="/js/dashboard.js" defer></script>
+</body>
+</html>
